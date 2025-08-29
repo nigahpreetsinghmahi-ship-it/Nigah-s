@@ -1,76 +1,233 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nigah Store</title>
+  <title>Meri Shop</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background: #f4f4f4;
-      text-align: center;
     }
     header {
-      background: #333;
+      background: #222;
       color: #fff;
-      padding: 20px;
+      padding: 15px;
+      text-align: center;
       font-size: 24px;
     }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    .container {
+      display: flex;
+      justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
       padding: 20px;
     }
     .product {
       background: #fff;
-      padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      width: 250px;
+      text-align: center;
     }
     .product img {
-      max-width: 100%;
+      width: 100%;
       border-radius: 10px;
     }
-    .price {
+    .product h2 {
       font-size: 20px;
       margin: 10px 0;
-      font-weight: bold;
-      color: green;
     }
-    .buy-btn {
-      display: inline-block;
-      background: orange;
+    .product p {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+    .product button {
+      background: #28a745;
       color: white;
-      padding: 10px 20px;
-      text-decoration: none;
+      border: none;
+      padding: 10px 15px;
       border-radius: 5px;
-      transition: 0.3s;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
     }
-    .buy-btn:hover {
-      background: darkorange;
+    .product button:hover {
+      background: #218838;
     }
   </style>
 </head>
 <body>
-  <header>🛍️ Nigah Store</header>
-  <section class="products">
 
+  <header>Meri Online Shop</header>
+
+  <div class="container">
+
+    <!-- Product 1 -->
     <div class="product">
-      <img src="https://via.placeholder.com/250" alt="Product 1">
-      <h3>Cool T-Shirt</h3>
-      <p class="price">₹499</p>
-      <a class="buy-btn" href="https://wa.me/918837829785?text=Hello%20Nigah%20Store!%20Mujhe%20*Cool%20T-Shirt*%20order%20karna%20hai.%20Price%3A%20%E2%82%B9499" target="_blank">Buy Now</a>
+      <img src="product1.jpg" alt="Product 1">
+      <h2>Product 1</h2>
+      <p>Price: ₹499</p>
+      <button>Buy Now</button>
     </div>
 
+    <!-- Product 2 -->
     <div class="product">
-      <img src="https://via.placeholder.com/250" alt="Product 2">
-      <h3>Stylish Jeans</h3>
-      <p class="price">₹1499</p<div class="product">
-  <img src="product2.jpg" alt="Product 2">
-  <h2>Stylish Jeans</h2>
-  <p>₹1499</p>
-  <button onclick="orderNow('Stylish Jeans', 1499)">Buy Now</button>
-</div>
+      <img src="product2.jpg" alt="Product 2">
+      <h2>Product 2</h2>
+      <p>Price: ₹999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product">
+      <img src="product3.jpg" alt="Product 3">
+      <h2>Product 3</h2>
+      <p>Price: ₹1499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product">
+      <img src="product4.jpg" alt="Product 4">
+      <h2>Product 4</h2>
+      <p>Price: ₹1999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product">
+      <img src="product5.jpg" alt="Product 5">
+      <h2>Product 5</h2>
+      <p>Price: ₹2499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product">
+      <img src="product6.jpg" alt="Product 6">
+      <h2>Product 6</h2>
+      <p>Price: ₹2999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="product">
+      <img src="product7.jpg" alt="Product 7">
+      <h2>Product 7</h2>
+      <p>Price: ₹3499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="product">
+      <img src="product8.jpg" alt="Product 8">
+      <h2>Product 8</h2>
+      <p>Price: ₹3999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 9 -->
+    <div class="product">
+      <img src="product9.jpg" alt="Product 9">
+      <h2>Product 9</h2>
+      <p>Price: ₹4499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 10 -->
+    <div class="product">
+      <img src="product10.jpg" alt="Product 10">
+      <h2>Product 10</h2>
+      <p>Price: ₹4999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 11 -->
+    <div class="product">
+      <img src="product11.jpg" alt="Product 11">
+      <h2>Product 11</h2>
+      <p>Price: ₹5499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 12 -->
+    <div class="product">
+      <img src="product12.jpg" alt="Product 12">
+      <h2>Product 12</h2>
+      <p>Price: ₹5999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 13 -->
+    <div class="product">
+      <img src="product13.jpg" alt="Product 13">
+      <h2>Product 13</h2>
+      <p>Price: ₹6499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 14 -->
+    <div class="product">
+      <img src="product14.jpg" alt="Product 14">
+      <h2>Product 14</h2>
+      <p>Price: ₹6999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 15 -->
+    <div class="product">
+      <img src="product15.jpg" alt="Product 15">
+      <h2>Product 15</h2>
+      <p>Price: ₹7499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 16 -->
+    <div class="product">
+      <img src="product16.jpg" alt="Product 16">
+      <h2>Product 16</h2>
+      <p>Price: ₹7999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 17 -->
+    <div class="product">
+      <img src="product17.jpg" alt="Product 17">
+      <h2>Product 17</h2>
+      <p>Price: ₹8499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 18 -->
+    <div class="product">
+      <img src="product18.jpg" alt="Product 18">
+      <h2>Product 18</h2>
+      <p>Price: ₹8999</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 19 -->
+    <div class="product">
+      <img src="product19.jpg" alt="Product 19">
+      <h2>Product 19</h2>
+      <p>Price: ₹9499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <!-- Product 20 -->
+    <div class="product">
+      <img src="product20.jpg" alt="Product 20">
+      <h2>Product 20</h2>
+      <p>Price: ₹9999</p>
+      <button>Buy Now</button>
+    </div>
+
+  </div>
+
+</body>
+</html>
