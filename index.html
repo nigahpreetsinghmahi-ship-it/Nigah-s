@@ -1,56 +1,103 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nigah's Website 🚀</title>
+  <title>Nigah Store 🛒</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #764ba2;
       color: white;
+      padding: 20px;
       text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
+    header h1 {
+      margin: 0;
     }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
     }
-    a.button {
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+    .card h3 {
+      margin: 10px 0 5px;
+    }
+    .price {
+      color: #764ba2;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+    .btn {
+      display: inline-block;
       background: #ff6a00;
       color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      font-size: 1rem;
+      padding: 10px 20px;
       border-radius: 25px;
+      text-decoration: none;
       transition: background 0.3s;
     }
-    a.button:hover {
+    .btn:hover {
       background: #ff8c42;
     }
     footer {
-      margin-top: 40px;
-      font-size: 0.9rem;
-      opacity: 0.8;
+      text-align: center;
+      padding: 20px;
+      margin-top: 20px;
+      background: #eee;
     }
   </style>
 </head>
 <body>
-  <h1>🚀 Hello Nigah 🚀</h1>
-  <p>Welcome to your own website! 🎉</p>
-  <a class="button" href="https://github.com">Visit My GitHub</a>
+  <header>
+    <h1>Welcome to Nigah Store 🛒</h1>
+    <p>Best products just for you 🚀</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150.png?text=Product+1" alt="Product 1">
+      <h3>Cool T-Shirt</h3>
+      <p class="price">₹499</p>
+      <a href="#" class="btn">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150.png?text=Product+2" alt="Product 2">
+      <h3>Smart Watch</h3>
+      <p class="price">₹1499</p>
+      <a href="#" class="btn">Buy Now</a>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/250x150.png?text=Product+3" alt="Product 3">
+      <h3>Wireless Earbuds</h3>
+      <p class="price">₹999</p>
+      <a href="#" class="btn">Buy Now</a>
+    </div>
+  </div>
 
   <footer>
-    <p>© 2025 Nigah | Made with ❤️ on GitHub Pages</p>
+    <p>© 2025 Nigah Store | Powered by GitHub Pages</p>
   </footer>
-</body>
-</html>
