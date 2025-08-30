@@ -1,1 +1,389 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amazon‑Lite</title>
+  <link rel="manifest" href="#" id="manifestLink">
+  <style>
+    :root{
+      --bg:#0f1111; --accent:#febd69; --accent2:#232f3e; --text:#111; --muted:#555; --chip:#eef2f7; --ok:#14a44d; --danger:#e11d48;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#fafafa;color:var(--text)}
+    a{color:inherit}
+    .header{position:sticky;top:0;z-index:50;background:var(--bg);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+    .row{display:flex;align-items:center;gap:12px}
+    .between{justify-content:space-between}
+    .logo{font-weight:700;font-size:20px;letter-spacing:.3px}
+    .logo b{color:var(--accent)}
+    .search{flex:1;display:flex}
+    .search input{flex:1;padding:10px 12px;border-radius:6px 0 0 6px;border:0;outline:0}
+    .search button{border:0;padding:10px 14px;border-radius:0 6px 6px 0;background:var(--accent);cursor:pointer}
+    .chip{background:var(--chip);padding:4px 10px;border-radius:999px;font-size:12px;color:#333}
+    .badge{position:relative;display:inline-block}
+    .badge .count{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border-radius:999px;padding:2px 6px;font-size:11px;min-width:18px;text-align:center}
+    .nav{gap:18px}.layout{display:grid;grid-template-columns:260px 1fr;gap:18px;align-items:start}
+.sidebar{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:14px;position:sticky;top:74px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden}
+.card .p{padding:14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}}
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.search{display:none}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}}
 
+.product{display:flex;flex-direction:column;height:100%}
+.product img{width:100%;height:160px;object-fit:contain;background:#fff}
+.title{font-size:14px;line-height:1.3;height:36px;overflow:hidden}
+.price{font-weight:700;margin-top:6px}
+.muted{color:var(--muted);font-size:13px}
+.row-btns{display:flex;gap:8px}
+button.btn{flex:1;border:1px solid #e5e7eb;background:#fff;padding:8px 10px;border-radius:10px;cursor:pointer}
+button.primary{background:var(--accent);border-color:var(--accent)}
+button.ghost{background:#fff}
+.hidden{display:none}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.toolbar input, .toolbar select{padding:8px 10px;border:1px solid #e5e7eb;border-radius:10px}
+
+/* Drawer/Modal */
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.3);display:none;align-items:flex-end}
+.sheet{width:100%;max-height:92%;overflow:auto;background:#fff;border-radius:18px 18px 0 0}
+.sheet .head{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+
+/* Cart side panel */
+.cart{position:fixed;top:0;right:0;width:360px;max-width:100%;height:100%;background:#fff;border-left:1px solid #eee;transform:translateX(100%);transition:.25s ease;z-index:60;display:flex;flex-direction:column}
+.cart.open{transform:translateX(0)}
+.cart .head{padding:12px 14px;border-bottom:1px solid #eee;display:flex;justify-content:space-between}
+.cart .items{padding:12px;flex:1;overflow:auto}
+.cart .foot{border-top:1px solid #eee;padding:12px}
+
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 14px;border-radius:999px;opacity:0;transition:.2s;z-index:80}
+.toast.show{opacity:1}
+
+.stars{color:#f59e0b}
+
+.label{font-size:12px;color:var(--muted)}
+.section-title{font-weight:700;margin:8px 0}
+.order{border:1px solid #eee;border-radius:12px;padding:12px;margin:10px 0;background:#fff}
+.divider{height:1px;background:#eee;margin:10px 0}
+.tag{display:inline-block;background:#f1f5f9;padding:2px 8px;border-radius:999px;font-size:12px}
+
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="container row between" style="padding:10px 0;">
+    <div class="row" style="gap:16px">
+      <div class="logo">amaz<b>on</b>-lite</div>
+      <div class="chip">Demo • Single file</div>
+    </div>
+    <div class="search">
+      <input id="q" placeholder="Search for products, brands and more…"/>
+      <button onclick="actions.search()">🔎</button>
+    </div>
+    <div class="row nav">
+      <div class="badge"><button class="btn ghost" onclick="ui.showOrders()">📦 Orders</button></div>
+      <div class="badge"><button class="btn ghost" onclick="ui.openCart()">🛒 Cart</button><span class="count" id="cartCount">0</span></div>
+      <div class="badge"><button class="btn ghost" onclick="ui.toggleAccount()">👤 Account</button></div>
+    </div>
+  </div>
+</header><main class="container" style="padding:16px 0 80px 0">
+  <div class="toolbar">
+    <select id="cat" onchange="actions.filter()"></select>
+    <select id="sort" onchange="actions.sort()">
+      <option value="default">Sort: Featured</option>
+      <option value="priceAsc">Price: Low to High</option>
+      <option value="priceDesc">Price: High to Low</option>
+      <option value="ratingDesc">Top Rated</option>
+      <option value="newest">Newest</option>
+    </select>
+    <input id="min" type="number" placeholder="Min ₹" style="width:120px" oninput="actions.filter()">
+    <input id="max" type="number" placeholder="Max ₹" style="width:120px" oninput="actions.filter()">
+    <button class="btn" onclick="actions.clearFilters()">Reset</button>
+    <span class="chip" id="resultsChip">0 results</span>
+  </div>  <div class="layout">
+    <aside class="sidebar">
+      <div class="section-title">Quick Filters</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px 0">
+        <button class="btn" onclick="actions.onlyInStock()">In Stock</button>
+        <button class="btn" onclick="actions.rating(4)">4★ & above</button>
+        <button class="btn" onclick="actions.priceLt(1000)">< ₹1,000</button>
+        <button class="btn" onclick="actions.priceLt(5000)">< ₹5,000</button>
+      </div>
+      <div class="divider"></div>
+      <div class="section-title">Wishlist</div>
+      <div id="wishlistBox" class="muted">No items yet.</div><div class="divider"></div>
+  <div class="section-title">Account</div>
+  <div id="accountBox" class="muted"></div>
+</aside>
+
+<section>
+  <div id="products" class="grid"></div>
+</section>
+
+  </div>
+</main><!-- Drawer for product details --><div id="drawer" class="drawer" onclick="event.target===this&&ui.hideDrawer()">
+  <div class="sheet">
+    <div class="head">
+      <div class="row" style="gap:10px">
+        <div id="dTitle" style="font-weight:700"></div>
+        <span class="tag" id="dBrand"></span>
+      </div>
+      <button class="btn" onclick="ui.hideDrawer()">✕</button>
+    </div>
+    <div class="p" style="display:grid;grid-template-columns:320px 1fr;gap:14px">
+      <img id="dImg" alt="" style="width:100%;height:320px;object-fit:contain;background:#fff;border:1px solid #eee;border-radius:12px">
+      <div>
+        <div class="price" id="dPrice"></div>
+        <div class="muted"><span id="dRating" class="stars"></span> • <span id="dStock"></span></div>
+        <p id="dDesc" style="margin:10px 0 6px 0"></p>
+        <div id="dVariants"></div>
+        <div style="margin:10px 0" class="row" >
+          <label class="label" for="qty">Qty</label>
+          <input id="qty" type="number" value="1" min="1" style="width:80px;margin-left:8px;padding:8px;border:1px solid #e5e7eb;border-radius:10px">
+        </div>
+        <div class="row-btns">
+          <button class="btn primary" id="btnAdd">Add to Cart</button>
+          <button class="btn" id="btnBuy">Buy Now</button>
+          <button class="btn" id="btnWish">♡ Wish</button>
+        </div>
+        <div id="notifyBox" class="muted" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+</div><!-- Cart Panel --><aside id="cart" class="cart">
+  <div class="head">
+    <div style="font-weight:700">Your Cart</div>
+    <button class="btn" onclick="ui.closeCart()">✕</button>
+  </div>
+  <div class="items" id="cartItems"></div>
+  <div class="foot">
+    <div class="row between"><span class="muted">Subtotal</span><b id="subtotal">₹0</b></div>
+    <button class="btn primary" style="width:100%;margin-top:8px" onclick="ui.checkout()">Proceed to Checkout</button>
+  </div>
+</aside><div id="toast" class="toast">Saved</div><script>
+// ---- Data & State ----
+const seedProducts=[
+ {id:'p100',title:'Wireless Earbuds Pro ANC',brand:'AudioMax',category:'Electronics',price:2499,rating:4.3,stock:12,img:'https://images.unsplash.com/photo-1585386959984-a41552231658?q=80&w=800&auto=format&fit=crop',desc:'Bluetooth 5.3, 30h battery, Type‑C fast charge.',variants:{color:['Black','White']},createdAt:Date.now()-86400*1000*9},
+ {id:'p101',title:'Smartwatch Series 7 AMOLED',brand:'FitWiz',category:'Wearables',price:3999,rating:4.5,stock:0,img:'https://images.unsplash.com/photo-1511735111819-9a3f7709049c?q=80&w=800&auto=format&fit=crop',desc:'Heart-rate, SpO₂, GPS, 5‑day battery.',variants:{color:['Black','Blue','Pink']},createdAt:Date.now()-86400*1000*3},
+ {id:'p102',title:'Mechanical Keyboard 87‑key',brand:'KeyPro',category:'Computers',price:5299,rating:4.7,stock:7,img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop',desc:'Hot‑swap switches, RGB, USB‑C.',variants:{switch:['Blue','Brown','Red']},createdAt:Date.now()-86400*1000*20},
+ {id:'p103',title:'USB‑C Fast Charger 25W',brand:'Voltix',category:'Accessories',price:799,rating:4.2,stock:28,img:'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?q=80&w=800&auto=format&fit=crop',desc:'Compact PD charger, BIS certified.',variants:{},createdAt:Date.now()-86400*1000*1},
+ {id:'p104',title:'4K Action Camera',brand:'GoCam',category:'Cameras',price:8999,rating:4.1,stock:4,img:'https://images.unsplash.com/photo-1508898578281-774ac4893bd0?q=80&w=800&auto=format&fit=crop',desc:'Waterproof case, EIS, dual screens.',variants:{},createdAt:Date.now()-86400*1000*12},
+ {id:'p105',title:'Laptop Stand Aluminium',brand:'ErgoLift',category:'Accessories',price:1299,rating:4.6,stock:16,img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop',desc:'Foldable, 6 angles, supports 15.6".',variants:{},createdAt:Date.now()-86400*1000*7},
+ {id:'p106',title:'Gaming Mouse 16000 DPI',brand:'ProClick',category:'Computers',price:1999,rating:4.4,stock:0,img:'https://images.unsplash.com/photo-1591843337130-5f3b7d52f4cb?q=80&w=800&auto=format&fit=crop',desc:'8 buttons, macro, RGB.',variants:{},createdAt:Date.now()-86400*1000*5},
+ {id:'p107',title:'Smart LED Bulb 12W',brand:'LumaHome',category:'Home',price:499,rating:4.0,stock:50,img:'https://images.unsplash.com/photo-1516387938699-a93567ec168e?q=80&w=800&auto=format&fit=crop',desc:'16M colors, Wi‑Fi, Alexa/Google.',variants:{},createdAt:Date.now()-86400*1000*2}
+];
+
+const store = {
+  products: JSON.parse(localStorage.getItem('al_products')||'null') || seedProducts,
+  cart: JSON.parse(localStorage.getItem('al_cart')||'[]'),
+  wishlist: JSON.parse(localStorage.getItem('al_wish')||'[]'),
+  orders: JSON.parse(localStorage.getItem('al_orders')||'[]'),
+  account: JSON.parse(localStorage.getItem('al_acc')||'null'),
+  watchers: JSON.parse(localStorage.getItem('al_watch')||'{}'), // {productId:[emails]}
+};
+const save=()=>{
+  localStorage.setItem('al_products',JSON.stringify(store.products));
+  localStorage.setItem('al_cart',JSON.stringify(store.cart));
+  localStorage.setItem('al_wish',JSON.stringify(store.wishlist));
+  localStorage.setItem('al_orders',JSON.stringify(store.orders));
+  localStorage.setItem('al_acc',JSON.stringify(store.account));
+  localStorage.setItem('al_watch',JSON.stringify(store.watchers));
+}
+
+// ---- UI Helpers ----
+const el=id=>document.getElementById(id);
+const fmt=n=>'₹'+n.toLocaleString('en-IN');
+const toast=(t)=>{const x=el('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1400)}
+
+// ---- Rendering ----
+function renderProducts(list){
+  const box=el('products');
+  box.innerHTML='';
+  el('resultsChip').textContent=`${list.length} results`;
+  list.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='card product';
+    card.innerHTML=`
+      <img src="${p.img}" alt="${p.title}">
+      <div class="p" style="display:flex;flex-direction:column;gap:6px;flex:1">
+        <div class="title">${p.title}</div>
+        <div class="muted">${p.brand} • <span class="stars">★ ${p.rating}</span></div>
+        <div class="price">${fmt(p.price)}</div>
+        <div class="row between" style="margin-top:auto">
+          <span class="tag">${p.stock>0? 'In stock':'Out of stock'}</span>
+          <span class="muted">${p.category}</span>
+        </div>
+        <div class="row-btns">
+          <button class="btn primary" ${p.stock? '' : 'disabled'} onclick="actions.add('${p.id}',1)">Add</button>
+          <button class="btn" onclick="ui.openProduct('${p.id}')">Details</button>
+          <button class="btn" onclick="actions.toggleWish('${p.id}')">♡</button>
+        </div>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+function renderWishlist(){
+  const box=el('wishlistBox');
+  if(!store.wishlist.length){box.textContent='No items yet.';return}
+  box.innerHTML='';
+  store.wishlist.map(id=>store.products.find(p=>p.id===id)).forEach(p=>{
+    const div=document.createElement('div');
+    div.className='row between';
+    div.style.margin='6px 0';
+    div.innerHTML=`<span style="font-size:14px">${p.title}</span><button class="btn" onclick="actions.toggleWish('${p.id}')">Remove</button>`;
+    box.appendChild(div);
+  });
+}
+
+function renderAccount(){
+  const box=el('accountBox');
+  if(!store.account){
+    box.innerHTML=`<div style="display:flex;gap:8px;flex-direction:column">
+      <input id="loginName" placeholder="Full name">
+      <input id="loginEmail" placeholder="Email">
+      <input id="loginPhone" placeholder="Phone">
+      <button class="btn primary" onclick="actions.login()">Sign in / Create</button>
+    </div>`;return;
+  }
+  box.innerHTML=`<div class="row between"><div><b>${store.account.name}</b><div class="muted">${store.account.email}</div></div><button class="btn" onclick="actions.logout()">Logout</button></div>`;
+}
+
+function renderCart(){
+  el('cartCount').textContent=store.cart.reduce((a,c)=>a+c.qty,0);
+  const items=el('cartItems'); items.innerHTML='';
+  let sub=0;
+  if(!store.cart.length){items.innerHTML='<div class="muted">Cart is empty.</div>'}
+  store.cart.forEach(ci=>{
+    const p=store.products.find(x=>x.id===ci.id);
+    if(!p) return; const line=p.price*ci.qty; sub+=line;
+    const row=document.createElement('div');
+    row.className='row'; row.style.justifyContent='space-between'; row.style.gap='8px'; row.style.margin='8px 0';
+    row.innerHTML=`
+      <img src="${p.img}" alt="" style="width:56px;height:56px;object-fit:contain;border:1px solid #eee;border-radius:10px"> 
+      <div style="flex:1">
+        <div style="font-size:14px">${p.title}</div>
+        <div class="muted">${fmt(p.price)} • ${ci.variant||''}</div>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn" onclick="actions.dec('${p.id}')">−</button>
+        <div style="min-width:24px;text-align:center">${ci.qty}</div>
+        <button class="btn" onclick="actions.inc('${p.id}')">+</button>
+      </div>
+      <b>${fmt(line)}</b>
+      <button class="btn" onclick="actions.remove('${p.id}')">✕</button>`;
+    items.appendChild(row);
+  });
+  el('subtotal').textContent=fmt(sub);
+}
+
+function setupCategories(){
+  const cats=['All',...new Set(store.products.map(p=>p.category))];
+  const s=el('cat'); s.innerHTML='';
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent='Category: '+c;s.appendChild(o)})
+}
+
+// ---- Actions ----
+const actions={
+  search(){ const q=el('q').value.toLowerCase(); const list=store.products.filter(p=>p.title.toLowerCase().includes(q)||p.brand.toLowerCase().includes(q)); renderProducts(list) },
+  filter(){
+    let list=[...store.products];
+    const cat=el('cat').value; if(cat&&cat!=='All') list=list.filter(p=>p.category===cat);
+    const min=+el('min').value||0, max=+el('max').value||Infinity; list=list.filter(p=>p.price>=min&&p.price<=max);
+    renderProducts(list);
+  },
+  clearFilters(){ el('cat').value='All'; el('min').value=''; el('max').value=''; el('q').value=''; renderProducts(store.products) },
+  sort(){
+    const s=el('sort').value; let list=[...document.querySelectorAll('#products .product')].map(n=>n._data).filter(Boolean); // fallback rebuild
+    let arr=[...store.products];
+    if(s==='priceAsc') arr.sort((a,b)=>a.price-b.price); else if(s==='priceDesc') arr.sort((a,b)=>b.price-a.price); else if(s==='ratingDesc') arr.sort((a,b)=>b.rating-a.rating); else if(s==='newest') arr.sort((a,b)=>b.createdAt-a.createdAt);
+    renderProducts(arr);
+  },
+  onlyInStock(){ renderProducts(store.products.filter(p=>p.stock>0)) },
+  rating(min){ renderProducts(store.products.filter(p=>p.rating>=min)) },
+  priceLt(n){ renderProducts(store.products.filter(p=>p.price<n)) },
+
+  add(id,qty,variant){ const p=store.products.find(x=>x.id===id); if(!p||p.stock<=0){toast('Out of stock');return}
+    const i=store.cart.findIndex(c=>c.id===id && c.variant===variant); if(i>-1) store.cart[i].qty+=qty; else store.cart.push({id,qty,variant}); save(); renderCart(); toast('Added to cart') },
+  inc(id){ const i=store.cart.findIndex(c=>c.id===id); if(i>-1) store.cart[i].qty++; save(); renderCart() },
+  dec(id){ const i=store.cart.findIndex(c=>c.id===id); if(i>-1){ store.cart[i].qty--; if(store.cart[i].qty<=0) store.cart.splice(i,1); save(); renderCart() } },
+  remove(id){ const i=store.cart.findIndex(c=>c.id===id); if(i>-1){ store.cart.splice(i,1); save(); renderCart(); toast('Removed') } },
+
+  toggleWish(id){ const i=store.wishlist.indexOf(id); if(i>-1){store.wishlist.splice(i,1); toast('Removed from wishlist')} else {store.wishlist.push(id); toast('Saved to wishlist')} save(); renderWishlist() },
+
+  login(){ const name=el('loginName').value.trim(); const email=el('loginEmail').value.trim(); const phone=el('loginPhone').value.trim(); if(!name||!email){toast('Enter name & email');return} store.account={name,email,phone}; save(); renderAccount(); toast('Welcome '+name.split(' ')[0]) },
+  logout(){ store.account=null; save(); renderAccount(); toast('Logged out') },
+};
+
+// ---- Product Drawer ----
+const ui={
+  openProduct(id){ const p=store.products.find(x=>x.id===id); if(!p) return; ui._open(p) },
+  _open(p){
+    el('dTitle').textContent=p.title; el('dBrand').textContent=p.brand; el('dPrice').textContent=fmt(p.price); el('dRating').textContent='★ '+p.rating; el('dStock').textContent=p.stock>0? (p.stock+ ' in stock') : 'Out of stock'; el('dImg').src=p.img; el('dDesc').textContent=p.desc;
+    const v=el('dVariants'); v.innerHTML='';
+    let chosen=null; Object.entries(p.variants||{}).forEach(([k,vals])=>{
+      const label=document.createElement('div'); label.className='label'; label.textContent=k.toUpperCase(); v.appendChild(label);
+      const row=document.createElement('div'); row.className='row'; row.style.gap='6px'; vals.forEach(val=>{
+        const b=document.createElement('button'); b.className='btn'; b.textContent=val; b.onclick=()=>{chosen=val; [...row.children].forEach(c=>c.style.outline='none'); b.style.outline='2px solid #111'}; row.appendChild(b);
+      }); v.appendChild(row);
+    });
+    el('btnAdd').onclick=()=>actions.add(p.id, +el('qty').value||1, chosen);
+    el('btnBuy').onclick=()=>{ actions.add(p.id, +el('qty').value||1, chosen); ui.checkout() };
+    el('btnWish').onclick=()=>actions.toggleWish(p.id);
+    const nb=el('notifyBox'); if(p.stock<=0){ nb.innerHTML=`<input id="nEmail" placeholder="Email for notify" style="padding:8px;border:1px solid #e5e7eb;border-radius:10px"> <button class="btn" onclick="notify('${p.id}')">Notify me</button>` } else nb.innerHTML='';
+    el('drawer').style.display='flex';
+  },
+  hideDrawer(){ el('drawer').style.display='none' },
+  openCart(){ el('cart').classList.add('open'); renderCart() },
+  closeCart(){ el('cart').classList.remove('open') },
+  toggleAccount(){ document.querySelector('.layout .sidebar').scrollIntoView({behavior:'smooth'}) },
+  checkout(){ if(!store.cart.length){toast('Cart is empty'); return} const name=store.account?.name || prompt('Your name?') || 'Guest'; const addr= prompt('Address (City, Pincode)?',''); const pay = prompt('Payment (COD/UPI)?','COD'); const id='OD'+Math.random().toString(36).slice(2,8).toUpperCase(); const now=new Date();
+    store.orders.unshift({id,when:now.toISOString(),name,addr,pay,items:[...store.cart]}); store.cart=[]; save(); renderCart(); ui.closeCart(); toast('Order placed: '+id); setTimeout(ui.showOrders,600) },
+  showOrders(){
+    const sheet=document.createElement('div'); sheet.className='drawer'; sheet.style.display='flex'; sheet.onclick=e=>e.target===sheet&&document.body.removeChild(sheet);
+    const inner=document.createElement('div'); inner.className='sheet'; inner.innerHTML=`<div class="head"><b>Orders</b><button class="btn">✕</button></div><div class="p" id="ordersBox"></div>`; inner.querySelector('button').onclick=()=>document.body.removeChild(sheet);
+    sheet.appendChild(inner); document.body.appendChild(sheet);
+    const box=inner.querySelector('#ordersBox');
+    if(!store.orders.length){ box.innerHTML='<div class="muted">No orders yet.</div>'; return }
+    store.orders.forEach(o=>{
+      const div=document.createElement('div'); div.className='order';
+      const total=o.items.reduce((a,c)=>{ const p=store.products.find(x=>x.id===c.id); return a + (p?p.price:0)*c.qty },0);
+      div.innerHTML=`<div class="row between"><div><div style="font-weight:700">${o.id}</div><div class="muted">${new Date(o.when).toLocaleString()}</div></div><div><b>${fmt(total)}</b></div></div>
+      <div class="divider"></div>
+      ${o.items.map(ci=>{ const p=store.products.find(x=>x.id===ci.id); if(!p) return ''; return `<div class='row between' style='margin:6px 0'><div>${p.title} <span class='muted'>x${ci.qty}</span></div><div>${fmt(p.price*ci.qty)}</div></div>`}).join('')}
+      <div class="divider"></div>
+      <div class="muted">Ship to: ${o.name} • ${o.addr||'Address N/A'} • Pay: ${o.pay||'N/A'}</div>`;
+      box.appendChild(div);
+    })
+  }
+}
+
+// ---- Notify me when in stock (demo) ----
+function notify(id){ const email=el('nEmail').value.trim(); if(!email) {toast('Enter email'); return} const list=store.watchers[id]||[]; if(!list.includes(email)) list.push(email); store.watchers[id]=list; save(); toast('We will notify you'); }
+// Simulate restock every 45s for demo
+setInterval(()=>{
+  const oos=store.products.filter(p=>p.stock<=0); if(!oos.length) return; const p=oos[Math.floor(Math.random()*oos.length)]; p.stock=5; save(); if(store.watchers[p.id]?.length){ alert(`${p.title} is back in stock! Emails notified: ${store.watchers[p.id].join(', ')}`) }
+  if(el('drawer').style.display==='flex'){ ui._open(p) } renderProducts(store.products);
+},45000);
+
+// ---- Init ----
+function init(){ setupCategories(); renderProducts(store.products); renderWishlist(); renderAccount(); renderCart(); registerPWA() }
+
+// Attach data refs to DOM cards (for sort fallback)
+const observer=new MutationObserver(()=>{ document.querySelectorAll('#products .product').forEach((n,i)=>{ n._data=store.products[i] }) });
+observer.observe(el('products'),{childList:true});
+
+// ---- PWA (single-file via Blob) ----
+function registerPWA(){
+  const manifest={name:'Amazon‑Lite',short_name:'AmazonLite',start_url:'./',display:'standalone',background_color:'#ffffff',theme_color:'#0f1111',icons:[]};
+  const mBlob=new Blob([JSON.stringify(manifest)],{type:'application/json'}); const mUrl=URL.createObjectURL(mBlob); document.getElementById('manifestLink').href=mUrl;
+  const swCode=`self.addEventListener('install',e=>{e.waitUntil(caches.open('al-v1').then(c=>c.addAll(['./'])))}); self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})`;
+  const swUrl=URL.createObjectURL(new Blob([swCode],{type:'text/javascript'})); if('serviceWorker' in navigator){ navigator.serviceWorker.register(swUrl).catch(()=>{}) }
+}
+
+window.addEventListener('DOMContentLoaded',init);
+</script></body>
+  </html>
