@@ -94,6 +94,107 @@
             background-color: #2980b9;
             border-color: #2980b9;
         }
+        
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1050;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .cart-sidebar.active {
+            right: 0;
+        }
+        
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1040;
+            display: none;
+        }
+        
+        .cart-overlay.active {
+            display: block;
+        }
+        
+        .login-modal, .review-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1060;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-modal.active, .review-modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+        
+        .review-form {
+            margin-top: 20px;
+        }
+        
+        .star-rating {
+            direction: rtl;
+            display: inline-block;
+        }
+        
+        .star-rating input[type=radio] {
+            display: none;
+        }
+        
+        .star-rating label {
+            color: #bbb;
+            font-size: 24px;
+            padding: 0;
+            cursor: pointer;
+        }
+        
+        .star-rating input[type=radio]:checked ~ label {
+            color: #f90;
+        }
+        
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #f90;
+        }
+        
+        .customer-image-upload {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .cart-sidebar {
+                width: 300px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -115,8 +216,11 @@
                     <li class="nav-item"><a class="nav-link" href="#contact">संपर्क</a></li>
                 </ul>
                 <div class="d-flex">
-                    <a href="#cart" class="btn btn-outline-light me-2"><i class="fas fa-shopping-cart"></i> <span class="badge bg-danger">3</span></a>
-                    <a href="#login" class="btn btn-light">लॉगिन</a>
+                    <button class="btn btn-outline-light me-2" id="cart-btn">
+                        <i class="fas fa-shopping-cart"></i> 
+                        <span class="badge bg-danger cart-count">0</span>
+                    </button>
+                    <button class="btn btn-light" id="login-btn">लॉगिन</button>
                 </div>
             </div>
         </div>
@@ -163,7 +267,11 @@
                                 <span class="fw-bold text-primary">₹1,499</span>
                                 <span class="text-muted"><s>₹2,499</s></span>
                             </div>
-                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                            <div class="d-flex mt-3">
+                                <button class="btn btn-primary w-100 me-2 add-to-cart" data-product="वायरलेस इयरबड्स" data-price="1499">कार्ट में जोड़ें</button>
+                                <button class="btn btn-outline-primary buy-now" data-product="वायरलेस इयरबड्स" data-price="1499">अभी खरीदें</button>
+                            </div>
+                            <button class="btn btn-link p-0 mt-2 write-review" data-product="वायरलेस इयरबड्स">समीक्षा लिखें</button>
                         </div>
                     </div>
                 </div>
@@ -179,7 +287,11 @@
                                 <span class="fw-bold text-primary">₹3,999</span>
                                 <span class="text-muted"><s>₹5,999</s></span>
                             </div>
-                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                            <div class="d-flex mt-3">
+                                <button class="btn btn-primary w-100 me-2 add-to-cart" data-product="स्मार्ट वॉच" data-price="3999">कार्ट में जोड़ें</button>
+                                <button class="btn btn-outline-primary buy-now" data-product="स्मार्ट वॉच" data-price="3999">अभी खरीदें</button>
+                            </div>
+                            <button class="btn btn-link p-0 mt-2 write-review" data-product="स्मार्ट वॉच">समीक्षा लिखें</button>
                         </div>
                     </div>
                 </div>
@@ -196,7 +308,11 @@
                                 <span class="fw-bold text-primary">₹2,299</span>
                                 <span class="text-muted"><s>₹3,499</s></span>
                             </div>
-                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                            <div class="d-flex mt-3">
+                                <button class="btn btn-primary w-100 me-2 add-to-cart" data-product="स्पोर्ट्स शूज" data-price="2299">कार्ट में जोड़ें</button>
+                                <button class="btn btn-outline-primary buy-now" data-product="स्पोर्ट्स शूज" data-price="2299">अभी खरीदें</button>
+                            </div>
+                            <button class="btn btn-link p-0 mt-2 write-review" data-product="स्पोर्ट्स शूज">समीक्षा लिखें</button>
                         </div>
                     </div>
                 </div>
@@ -212,7 +328,86 @@
                                 <span class="fw-bold text-primary">₹1,799</span>
                                 <span class="text-muted"><s>₹2,299</s></span>
                             </div>
-                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                            <div class="d-flex mt-3">
+                                <button class="btn btn-primary w-100 me-2 add-to-cart" data-product="लैपटॉप बैकपैक" data-price="1799">कार्ट में जोड़ें</button>
+                                <button class="btn btn-outline-primary buy-now" data-product="लैपटॉप बैकपैक" data-price="1799">अभी खरीदें</button>
+                            </div>
+                            <button class="btn btn-link p-0 mt-2 write-review" data-product="लैपटॉप बैकपैक">समीक्षा लिखें</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-5 bg-light" id="reviews">
+        <div class="container">
+            <h2 class="text-center mb-5">ग्राहक समीक्षाएं</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Customer" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h5 class="card-title mb-0">राहुल शर्मा</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">बहुत अच्छा उत्पाद और तेज डिलीवरी। पैकेजिंग भी अच्छी थी। निश्चित रूप से फिर से खरीदारी करूंगा।</p>
+                            <div class="mt-2">
+                                <img src="https://images.unsplash.com/photo-1526925539332-aa3b66e35444?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="img-thumbnail me-1" width="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Customer" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h5 class="card-title mb-0">प्रिया पाटिल</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">उत्पाद अच्छा है लेकिन डिलीवरी में अपेक्षा से अधिक समय लगा। गुणवत्ता संतोषजनक है।</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Customer" class="rounded-circle me-3" width="50">
+                                <div>
+                                    <h5 class="card-title mb-0">विकास सिंह</h5>
+                                    <div class="text-warning">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">मूल्य के हिसाब से बेहतरीन उत्पाद। ग्राहक सेवा भी अच्छी है। समय पर डिलीवरी हुई।</p>
+                            <div class="mt-2">
+                                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" class="img-thumbnail me-1" width="60">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -221,7 +416,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-5 bg-light">
+    <section class="py-5">
         <div class="container">
             <h2 class="text-center mb-5">क्यों चुनें हमें?</h2>
             <div class="row">
@@ -250,6 +445,52 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section class="py-5 bg-light" id="contact">
+        <div class="container">
+            <h2 class="text-center mb-5">संपर्क करें</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">हमसे संपर्क करें</h4>
+                            <p class="card-text">किसी भी प्रश्न या सहायता के लिए, कृपया हमसे संपर्क करें:</p>
+                            <p><i class="fas fa-envelope me-2"></i> info@dropshipbazaar.com</p>
+                            <p><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                            <p><i class="fas fa-map-marker-alt me-2"></i> 123 व्यापार मार्ग, मुंबई, भारत</p>
+                            <div class="mt-4">
+                                <h5>Business Hours</h5>
+                                <p>सोम-शनि: 9:00 AM - 6:00 PM<br>रविवार: बंद</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">संदेश भेजें</h4>
+                            <form id="contact-form">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">आपका नाम</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">ईमेल</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">संदेश</label>
+                                    <textarea class="form-control" id="message" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">भेजें</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -268,9 +509,9 @@
                     <h5>लिंक</h5>
                     <ul class="list-unstyled">
                         <li><a href="#">होम</a></li>
-                        <li><a href="#">उत्पाद</a></li>
-                        <li><a href="#">श्रेणियाँ</a></li>
-                        <li><a href="#">हमारे बारे में</a></li>
+                        <li><a href="#products">उत्पाद</a></li>
+                        <li><a href="#categories">श्रेणियाँ</a></li>
+                        <li><a href="#about">हमारे बारे में</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2 mb-4">
@@ -286,8 +527,8 @@
                     <h5>न्यूज़लेटर की सदस्यता लें</h5>
                     <p>नवीनतम उत्पादों, ऑफ़र और विशेष छूट के बारे में जानने के लिए सदस्यता लें।</p>
                     <div class="input-group">
-                        <input type="email" class="form-control" placeholder="आपकी ईमेल">
-                        <button class="btn btn-primary">सब्सक्राइब</button>
+                        <input type="email" class="form-control" placeholder="आपकी ईमेल" id="newsletter-email">
+                        <button class="btn btn-primary" id="newsletter-btn">सब्सक्राइब</button>
                     </div>
                 </div>
             </div>
@@ -296,23 +537,219 @@
         </div>
     </footer>
 
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4>आपकी कार्ट</h4>
+            <button class="btn-close" id="close-cart"></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here dynamically -->
+            <p class="text-center" id="empty-cart-message">आपकी कार्ट खाली है</p>
+        </div>
+        <div class="cart-total mt-4">
+            <div class="d-flex justify-content-between">
+                <strong>कुल राशि:</strong>
+                <strong id="cart-total-price">₹0</strong>
+            </div>
+            <button class="btn btn-primary w-100 mt-3">चेकआउट</button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4>लॉगिन / साइनअप</h4>
+                <button class="btn-close" id="close-login"></button>
+            </div>
+            <form id="login-form">
+                <div class="mb-3">
+                    <label for="login-email" class="form-label">ईमेल</label>
+                    <input type="email" class="form-control" id="login-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login-password" class="form-label">पासवर्ड</label>
+                    <input type="password" class="form-control" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">लॉगिन</button>
+            </form>
+            <p class="text-center mt-3">
+                खाता नहीं है? <a href="#" id="show-signup">साइनअप करें</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="review-modal" id="review-modal">
+        <div class="modal-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 id="review-product-name">उत्पाद समीक्षा</h4>
+                <button class="btn-close" id="close-review"></button>
+            </div>
+            <form class="review-form" id="review-form">
+                <div class="mb-3">
+                    <label class="form-label">रेटिंग</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="review-title" class="form-label">समीक्षा शीर्षक</label>
+                    <input type="text" class="form-control" id="review-title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="review-text" class="form-label">आपकी समीक्षा</label>
+                    <textarea class="form-control" id="review-text" rows="4" required></textarea>
+                </div>
+                <div class="customer-image-upload" id="image-upload-area">
+                    <i class="fas fa-cloud-upload-alt mb-2"></i>
+                    <p>यहां क्लिक करके अपनी तस्वीर अपलोड करें</p>
+                    <input type="file" id="review-image" accept="image/*" style="display: none;">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-3">समीक्षा सबमिट करें</button>
+            </form>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Simple cart functionality
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', function() {
-                const product = this.closest('.card').querySelector('.card-title').innerText;
+        // Cart functionality
+        const cartBtn = document.getElementById('cart-btn');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotalPrice = document.getElementById('cart-total-price');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const buyNowButtons = document.querySelectorAll('.buy-now');
+        const cartCount = document.querySelector('.cart-count');
+        
+        let cart = [];
+        
+        // Open cart
+        cartBtn.addEventListener('click', () => {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
+        });
+        
+        // Close cart
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+        
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        });
+        
+        // Add to cart functionality
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = button.getAttribute('data-product');
+                const price = parseInt(button.getAttribute('data-price'));
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.product === product);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        product,
+                        price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
                 alert(`${product} आपके कार्ट में जोड़ दिया गया है!`);
             });
         });
         
-        // Newsletter form submission
-        document.querySelector('.btn-primary').addEventListener('click', function() {
-            const email = document.querySelector('input[type="email"]').value;
-            if (email) {
-                alert(`आपकी सदस्यता के लिए धन्यवाद! हम आपको ${email} पर अपडेट भेजेंगे।`);
-            }
+        // Buy now functionality
+        buyNowButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = button.getAttribute('data-product');
+                const price = parseInt(button.getAttribute('data-price'));
+                
+                // Clear cart and add only this product
+                cart = [{
+                    product,
+                    price,
+                    quantity: 1
+                }];
+                
+                updateCart();
+                cartSidebar.classList.add('active');
+                cartOverlay.classList.add('active');
+            });
         });
-    </script>
-</body>
-</html>
+        
+        // Update cart UI
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update cart items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartTotalPrice.textContent = '₹0';
+                return;
+            }
+            
+            emptyCartMessage.style.display = 'none';
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item d-flex justify-content-between align-items-center mb-3';
+                cartItem.innerHTML = `
+                    <div>
+                        <h6 class="mb-0">${item.product}</h6>
+                        <small class="text-muted">₹${item.price} x ${item.quantity}</small>
+                    </div>
+                    <div>
+                        <span class="fw-bold">₹${itemTotal}</span>
+                        <button class="btn btn-sm btn-outline-danger ms-2 remove-item" data-product="${item.product}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotalPrice.textContent = `₹${total}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const product = button.getAttribute('data-product');
+                    cart = cart.filter(item => item.product !== product);
+                    updateCart();
+                });
+            });
+        }
+        
+        // Login functionality
+        const loginBtn =
