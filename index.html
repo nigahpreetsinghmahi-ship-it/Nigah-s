@@ -1,77 +1,457 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DropshipBazaar - आपका विश्वसनीय ड्रॉपशिपिंग स्टोर</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Zazy.in - आपका ड्रॉपशिपिंग स्टोर</title>
     <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #2c3e50;
-            --accent: #e74c3c;
-            --light: #ecf0f1;
-            --dark: #2c3e50;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f5f5f5;
+            color: #333;
         }
         
-        .navbar {
-            background-color: var(--secondary);
-            padding: 15px 0;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
-        .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');// प्रोडक्ट आउट ऑफ़ स्टॉक नोटिफिकेशन
-function checkStock() {
-    // डेली स्टॉक चेक करने के लिए API इंटीग्रेशन
-}
-
-// ऑटोमेटेड व्हाट्सएप्प मैसेजिंग
-function setupWhatsAppAutomation() {
-    // Twilio या अन्य WhatsApp Business API का उपयोग करें
-}
-            background-size: cover;
-            background-position: center;
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
-            padding: 100px 0;
+            padding: 20px 0;
             text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
         
         .product-card {
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
         }
         
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
-        .category-btn {
-            margin: 5px;
-            border-radius: 20px;
+        .product-image {
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
         }
         
-        .feature-box {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+        .product-info {
+            padding: 20px;
         }
         
-        .feature-box i {
-            font-size: 40px;
-            color: var(--primary);
+        .product-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            color: #e74c3c;
+            font-weight: bold;
             margin-bottom: 15px;
         }
         
-        footer {
+        .order-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+        
+        .order-btn:hover {
+            background: #219a52;
+        }
+        
+        .out-of-stock {
+            opacity: 0.7;
+            position: relative;
+        }
+        
+        .out-of-stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .notify-section {
+            padding: 15px;
+            background: #fff8e1;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .notify-btn {
+            background: #ffa726;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+        
+        .review-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .review-form {
+            margin-top: 20px;
+        }
+        
+        .review-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        
+        .review-submit {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .reviews-container {
+            margin-top: 20px;
+        }
+        
+        .review-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6a11cb;
+        }
+        
+        .review-author {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Zazy.in</div>
+            <div class="tagline">आपका विश्वसनीय ड्रॉपशिपिंग स्टोर</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="products-grid">
+            <!-- लबुबु प्रोडक्ट -->
+            <div class="product-card">
+                <div class="product-image">🪆</div>
+                <div class="product-info">
+                    <h3 class="product-title">लबुबु कलेक्टिबल</h3>
+                    <div class="product-price">₹4,000</div>
+                    <button class="order-btn" onclick="openOrderModal('लबुबु कलेक्टिबल', 4000)">अभी ऑर्डर करें</button>
+                </div>
+            </div>
+
+            <!-- लिपस्टिक -->
+            <div class="product-card">
+                <div class="product-image">💄</div>
+                <div class="product-info">
+                    <h3 class="product-title">प्रीमियम लिपस्टिक</h3>
+                    <div class="product-price">₹600 (5 grams)</div>
+                    <button class="order-btn" onclick="openOrderModal('प्रीमियम लिपस्टिक', 600)">अभी ऑर्डर करें</button>
+                </div>
+            </div>
+
+            <!-- किचन प्रोडक्ट -->
+            <div class="product-card out-of-stock">
+                <div class="out-of-stock-badge">Out of Stock</div>
+                <div class="product-image">🔪</div>
+                <div class="product-info">
+                    <h3 class="product-title">किचन यूटेन्सिल सेट</h3>
+                    <div class="product-price">₹1,200</div>
+                    <div class="notify-section">
+                        <p>यह प्रोडक्ट currently out of stock है</p>
+                        <button class="notify-btn" onclick="notifyWhenAvailable('किचन यूटेन्सिल सेट')">
+                            स्टॉक आने पर नोटिफाई करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- रिव्यू सेक्शन -->
+        <div class="review-section">
+            <h2>ग्राहक समीक्षाएं</h2>
+            <div class="review-form">
+                <h3>अपनी समीक्षा जोड़ें</h3>
+                <input type="text" id="reviewerName" placeholder="आपका नाम" class="review-input">
+                <textarea id="reviewText" placeholder="आपकी समीक्षा..." class="review-input" rows="4"></textarea>
+                <button class="review-submit" onclick="addReview()">समीक्षा जोड़ें</button>
+            </div>
+            
+            <div class="reviews-container" id="reviewsContainer">
+                <!-- रिव्यू यहाँ डायनामिकली जोड़े जाएंगे -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ऑर्डर मोडल -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">ऑर्डर फॉर्म</h2>
+            <form onsubmit="placeOrder(event)">
+                <div class="form-group">
+                    <label for="name">आपका नाम</label>
+                    <input type="text" id="name" required placeholder="पूरा नाम">
+                </div>
+                <div class="form-group">
+                    <label for="phone">मोबाइल नंबर</label>
+                    <input type="tel" id="phone" required placeholder="10 अंकों का मोबाइल नंबर">
+                </div>
+                <div class="form-group">
+                    <label for="address">पूरा पता</label>
+                    <textarea id="address" required placeholder="आपका पूरा पता..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product">प्रोडक्ट</label>
+                    <input type="text" id="product" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="price">कीमत</label>
+                    <input type="text" id="price" readonly>
+                </div>
+                <button type="submit" class="submit-btn">ऑर्डर कन्फर्म करें</button>
+            </form>
+            <button onclick="closeModal()" style="margin-top: 10px; width: 100%; background: #95a5a6;">बंद करें</button>
+        </div>
+    </div>
+
+    <script>
+        // वर्तमान ऑर्डर ट्रैक करने के लिए
+        let currentOrder = null;
+        
+        // मोडल खोलने के लिए फंक्शन
+        function openOrderModal(productName, price) {
+            document.getElementById('modalTitle').textContent = `${productName} - ऑर्डर करें`;
+            document.getElementById('product').value = productName;
+            document.getElementById('price').value = `₹${price}`;
+            document.getElementById('orderModal').style.display = 'flex';
+            
+            currentOrder = {
+                product: productName,
+                price: price
+            };
+        }
+        
+        // मोडल बंद करने के लिए
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+        
+        // ऑर्डर प्रोसेसिंग
+        function placeOrder(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            
+            if (!name || !phone || !address) {
+                alert('कृपया सभी जानकारी भरें');
+                return;
+            }
+            
+            if (phone.length !== 10 || isNaN(phone)) {
+                alert('कृपया वैध मोबाइल नंबर दर्ज करें');
+                return;
+            }
+            
+            // व्हाट्सएप्प मैसेज तैयार करना
+            const message = `नया ऑर्डर:\n\nप्रोडक्ट: ${currentOrder.product}\nकीमत: ₹${currentOrder.price}\nग्राहक: ${name}\nफोन: ${phone}\nपता: ${address}`;
+            
+            // व्हाट्सएप्प पर भेजें
+            sendWhatsAppOrder(message);
+            
+            // फॉर्म रीसेट करें
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('address').value = '';
+            
+            closeModal();
+            
+            alert('आपका ऑर्डर कन्फर्म हो गया है! हम जल्दी संपर्क करेंगे।');
+        }
+        
+        // व्हाट्सएप्प इंटीग्रेशन
+        function sendWhatsAppOrder(message) {
+            const phone = "8837829785";
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+        
+        // आउट ऑफ़ स्टॉक नोटिफिकेशन
+        function notifyWhenAvailable(productName) {
+            const email = prompt(`कृपया अपना ईमेल दर्ज करें, ${productName} के स्टॉक आने पर हम नोटिफाई करेंगे:`);
+            if (email) {
+                alert('धन्यवाद! हम सूचित करेंगे जब प्रोडक्ट उपलब्ध होगा।');
+                // यहाँ आप इसे डेटाबेस में सेव कर सकते हैं
+            }
+        }
+        
+        // रिव्यू सिस्टम
+        function addReview() {
+            const name = document.getElementById('reviewerName').value;
+            const text = document.getElementById('reviewText').value;
+            
+            if (!name || !text) {
+                alert('कृपया नाम और समीक्षा दोनों भरें');
+                return;
+            }
+            
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review-item';
+            reviewElement.innerHTML = `
+                <div class="review-author">${name}</div>
+                <div class="review-text">${text}</div>
+            `;
+            
+            document.getElementById('reviewsContainer').prepend(reviewElement);
+            
+            // फॉर्म रीसेट
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewText').value = '';
+            
+            alert('आपकी समीक्षा के लिए धन्यवाद!');
+        }
+        
+        // बाहर क्लिक करने पर मोडल बंद करें
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
