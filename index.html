@@ -1,196 +1,318 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Zazy.in - Amazon Lite Clone</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #ffffff;
-      color: #222;
-    }
-    header {
-      background: #0046d5; /* Blue instead of Yellow */
-      color: white;
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-    }
-    #searchBar {
-      width: 50%;
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-    }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .product {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      text-align: center;
-      background: #f9f9f9;
-    }
-    .product img {
-      width: 100%;
-      max-height: 160px;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
-    .btn {
-      padding: 6px 12px;
-      margin: 4px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .btn-cart { background: #0046d5; color: white; }
-    .btn-buy { background: green; color: white; }
-    .btn-wish { background: pink; }
-    .out-of-stock { color: red; font-weight: bold; }
-    #cart, #orders {
-      padding: 20px;
-      border-top: 2px solid #0046d5;
-      background: #f1f1f1;
-    }
-    footer {
-      padding: 10px;
-      text-align: center;
-      background: #0046d5;
-      color: white;
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DropshipBazaar - आपका विश्वसनीय ड्रॉपशिपिंग स्टोर</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: var(--secondary);
+            padding: 15px 0;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1607082350899-7e105aa886ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .product-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .category-btn {
+            margin: 5px;
+            border-radius: 20px;
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .feature-box i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+        
+        .badge-new {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-store"></i> DropshipBazaar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">होम</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#products">उत्पाद</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#categories">श्रेणियाँ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">हमारे बारे में</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">संपर्क</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#cart" class="btn btn-outline-light me-2"><i class="fas fa-shopping-cart"></i> <span class="badge bg-danger">3</span></a>
+                    <a href="#login" class="btn btn-light">लॉगिन</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  <header>
-    <h1>Zazy.in</h1>
-    <input type="text" id="searchBar" placeholder="Search for products..." />
-    <div>
-      <button class="btn" onclick="showCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
-      <button class="btn" onclick="showOrders()">📦 Orders</button>
-    </div>
-  </header>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold">आपका विश्वसनीय ड्रॉपशिपिंग स्टोर</h1>
+            <p class="lead">हजारों उत्पाद, प्रतिस्पर्धी मूल्य, और तेज डिलीवरी</p>
+            <a href="#products" class="btn btn-primary btn-lg mt-3">अभी खरीदारी करें <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
 
-  <section class="products" id="products"></section>
+    <!-- Categories Section -->
+    <section class="py-5 bg-light" id="categories">
+        <div class="container">
+            <h2 class="text-center mb-5">श्रेणियाँ</h2>
+            <div class="text-center">
+                <button class="btn btn-outline-primary category-btn">सभी उत्पाद</button>
+                <button class="btn btn-outline-primary category-btn">इलेक्ट्रॉनिक्स</button>
+                <button class="btn btn-outline-primary category-btn">फैशन</button>
+                <button class="btn btn-outline-primary category-btn">होम और गार्डन</button>
+                <button class="btn btn-outline-primary category-btn">ब्यूटी</button>
+                <button class="btn btn-outline-primary category-btn">खिलौने</button>
+            </div>
+        </div>
+    </section>
 
-  <section id="cart" style="display:none"></section>
-  <section id="orders" style="display:none"></section>
+    <!-- Products Section -->
+    <section class="py-5" id="products">
+        <div class="container">
+            <h2 class="text-center mb-5">लोकप्रिय उत्पाद</h2>
+            <div class="row">
+                <!-- Product 1 -->
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card">
+                        <span class="badge badge-new">नया</span>
+                        <img src="https://images.unsplash.com/photo-1526925539332-aa3b66e35444?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Wireless Earbuds">
+                        <div class="card-body">
+                            <h5 class="card-title">वायरलेस इयरबड्स</h5>
+                            <p class="text-muted">इलेक्ट्रॉनिक्स</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-primary">₹1,499</span>
+                                <span class="text-muted"><s>₹2,499</s></span>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Smart Watch">
+                        <div class="card-body">
+                            <h5 class="card-title">स्मार्ट वॉच</h5>
+                            <p class="text-muted">इलेक्ट्रॉनिक्स</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-primary">₹3,999</span>
+                                <span class="text-muted"><s>₹5,999</s></span>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card">
+                        <span class="badge badge-new">नया</span>
+                        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Sports Shoes">
+                        <div class="card-body">
+                            <h5 class="card-title">स्पोर्ट्स शूज</h5>
+                            <p class="text-muted">फैशन</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-primary">₹2,299</span>
+                                <span class="text-muted"><s>₹3,499</s></span>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card">
+                        <img src="https://images.unsplash.com/photo-1571781926291-4774740ebe44?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="card-img-top" alt="Backpack">
+                        <div class="card-body">
+                            <h5 class="card-title">लैपटॉप बैकपैक</h5>
+                            <p class="text-muted">फैशन</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-primary">₹1,799</span>
+                                <span class="text-muted"><s>₹2,299</s></span>
+                            </div>
+                            <button class="btn btn-primary w-100 mt-3">कार्ट में जोड़ें</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <footer>© 2025 Zazy.in - Amazon Lite Clone</footer>
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">क्यों चुनें हमें?</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="fas fa-shipping-fast"></i>
+                        <h4>तेज डिलीवरी</h4>
+                        <p>7-10 कार्यदिवसों में दुनिया भर में डिलीवरी</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="fas fa-undo"></i>
+                        <h4>आसान रिटर्न</h4>
+                        <p>30-दिन की मनी-बैक गारंटी</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="fas fa-headset"></i>
+                        <h4>24/7 सपोर्ट</h4>
+                        <p>हमारे ग्राहक सहायता टीम से संपर्क करें</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-  // Dummy Products
-  const products = [
-    {id:1, name:"iPhone 15 Pro", price:120000, stock:5, img:"https://via.placeholder.com/150"},
-    {id:2, name:"Samsung S24 Ultra", price:95000, stock:0, img:"https://via.placeholder.com/150"},
-    {id:3, name:"Sony Headphones", price:7999, stock:12, img:"https://via.placeholder.com/150"},
-    {id:4, name:"Nike Shoes", price:5500, stock:4, img:"https://via.placeholder.com/150"},
-    {id:5, name:"MacBook Air M3", price:145000, stock:3, img:"https://via.placeholder.com/150"}
-  ];
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>DropshipBazaar</h5>
+                    <p>आपका विश्वसनीय ड्रॉपशिपिंग पार्टनर। गुणवत्तापूर्ण उत्पाद और उत्कृष्ट ग्राहक सेवा।</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>लिंक</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">होम</a></li>
+                        <li><a href="#">उत्पाद</a></li>
+                        <li><a href="#">श्रेणियाँ</a></li>
+                        <li><a href="#">हमारे बारे में</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>सहायता</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">खाता</a></li>
+                        <li><a href="#">डिलीवरी</a></li>
+                        <li><a href="#">रिटर्न</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>न्यूज़लेटर की सदस्यता लें</h5>
+                    <p>नवीनतम उत्पादों, ऑफ़र और विशेष छूट के बारे में जानने के लिए सदस्यता लें।</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="आपकी ईमेल">
+                        <button class="btn btn-primary">सब्सक्राइब</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">© 2023 DropshipBazaar. सर्वाधिकार सुरक्षित।</p>
+        </div>
+    </footer>
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-  const productContainer = document.getElementById("products");
-
-  function renderProducts(filter="") {
-    productContainer.innerHTML = "";
-    products.filter(p=>p.name.toLowerCase().includes(filter.toLowerCase()))
-    .forEach(p=>{
-      productContainer.innerHTML += `
-        <div class="product">
-          <img src="${p.img}" alt="${p.name}">
-          <h3>${p.name}</h3>
-          <p>₹${p.price}</p>
-          ${p.stock>0 ? `<p>In Stock: ${p.stock}</p>` : `<p class="out-of-stock">Out of Stock</p>`}
-          <button class="btn btn-cart" onclick="addToCart(${p.id})">Add to Cart</button>
-          <button class="btn btn-buy" onclick="buyNow(${p.id})">Buy Now</button>
-          <button class="btn btn-wish" onclick="toggleWishlist(${p.id})">❤️ Wishlist</button>
-          ${p.stock===0 ? `<button class="btn" onclick="notifyMe('${p.name}')">Notify Me</button>` : ""}
-        </div>`;
-    });
-  }
-  renderProducts();
-
-  document.getElementById("searchBar").addEventListener("input", e=>{
-    renderProducts(e.target.value);
-  });
-
-  function addToCart(id){
-    let p = products.find(x=>x.id===id);
-    if(p.stock<=0) return alert("Out of stock");
-    cart.push({...p, qty:1});
-    localStorage.setItem("cart", JSON.stringify(cart));
-    document.getElementById("cartCount").innerText = cart.length;
-    alert(p.name+" added to cart");
-  }
-
-  function buyNow(id){
-    let p = products.find(x=>x.id===id);
-    if(p.stock<=0) return alert("Out of stock");
-    let order = {...p, qty:1, date:new Date().toLocaleString()};
-    orders.push(order);
-    localStorage.setItem("orders", JSON.stringify(orders));
-    alert("Order placed for "+p.name+" ✅");
-  }
-
-  function toggleWishlist(id){
-    if(wishlist.includes(id)){
-      wishlist = wishlist.filter(x=>x!==id);
-      alert("Removed from Wishlist");
-    } else {
-      wishlist.push(id);
-      alert("Added to Wishlist");
-    }
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }
-
-  function notifyMe(name){
-    alert("You will be notified when "+name+" is back in stock!");
-    // (Future: WhatsApp API / Email hook)
-  }
-
-  function showCart(){
-    document.getElementById("cart").style.display="block";
-    document.getElementById("orders").style.display="none";
-    let html = "<h2>Your Cart</h2>";
-    cart.forEach((c,i)=>{
-      html += `<p>${c.name} - ₹${c.price} x ${c.qty}</p>`;
-    });
-    document.getElementById("cart").innerHTML = html;
-  }
-
-  function showOrders(){
-    document.getElementById("orders").style.display="block";
-    document.getElementById("cart").style.display="none";
-    let html = "<h2>Your Orders</h2>";
-    orders.forEach(o=>{
-      html += `<p>${o.name} - ₹${o.price} (Date: ${o.date})</p>`;
-    });
-    document.getElementById("orders").innerHTML = html;
-  }
-
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple cart functionality
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const product = this.closest('.card').querySelector('.card-title').innerText;
+                alert(`${product} आपके कार्ट में जोड़ दिया गया है!`);
+            });
+        });
+        
+        // Newsletter form submission
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const email = document.querySelector('input[type="email"]').value;
+            if (email) {
+                alert(`आपकी सदस्यता के लिए धन्यवाद! हम आपको ${email} पर अपडेट भेजेंगे।`);
+            }
+        });
+    </script>
 </body>
 </html>
-<img src="images/iphone15.jpg" alt="iPhone 15 Pro">function confirmOrder(productName, price) {
-    let message = `New Order Confirmed!\n\nProduct: ${productName}\nPrice: ₹${price}`;
-    let phone = "918837829785"; // Tera WhatsApp number
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-}
