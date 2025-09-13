@@ -1,0 +1,14 @@
+document.addEventListener('DOMContentLoaded', function(){
+  const vid = document.getElementById('heroVideo');
+  function toggleVideo(){
+    if(window.innerWidth <= 720){
+      if(vid && !vid.paused){ vid.pause(); }
+      vid.style.display = 'none';
+    } else {
+      if(vid){ vid.style.display = ''; try{ vid.play().catch(()=>{}); } catch(e){} }
+    }
+  }
+  toggleVideo();
+  window.addEventListener('resize', toggleVideo);
+  document.getElementById('year').textContent = new Date().getFullYear();
+});
