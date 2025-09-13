@@ -1,0 +1,71 @@
+:root{
+  --bg:#f7f6f4;
+  --text:#111;
+  --muted:#6b6b6b;
+  --accent:#b88b4a;
+  --max-width:1100px;
+  --container-padding:20px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max-width);margin:0 auto;padding:0 var(--container-padding)}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:86vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
+  overflow:hidden;
+  background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+}
+.hero__video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:brightness(0.7) contrast(1.05);
+}
+.hero__product{
+  position:relative;z-index:2;max-width:40vw;pointer-events:none;transform:translateY(0);
+  mix-blend-mode:screen;
+}
+.hero__content{position:relative;z-index:3;max-width:900px;padding:20px}
+.hero__title{font-size:clamp(28px,5vw,52px);margin:0 0 8px;font-weight:600;letter-spacing:1px}
+.hero__subtitle{margin:0 0 18px;color:rgba(255,255,255,0.85);font-size:clamp(14px,2vw,18px)}
+.hero__ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 20px;border-radius:6px;font-weight:600;letter-spacing:0.6px}
+.btn--outline{border:1px solid rgba(255,255,255,0.9);background:transparent;color:#fff}
+.btn--solid{background:var(--accent);color:#fff;border:1px solid rgba(0,0,0,0.05)}
+
+/* sections */
+.section-title{text-align:center;margin:48px 0 18px;font-size:22px;color:var(--text)}
+.collections .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{display:block;background:#fff;border-radius:8px;overflow:hidden;text-align:center;color:var(--text);padding:12px;box-shadow:0 6px 24px rgba(20,20,20,0.06)}
+.card img{width:100%;height:220px;object-fit:cover;display:block}
+.card h3{margin:12px 0 0;font-size:16px}
+
+/* campaign */
+.campaign{padding:48px 0;background:#fff}
+.campaign__media img{width:100%;height:420px;object-fit:cover;border-radius:8px}
+.campaign__text{padding:20px 0;max-width:600px;margin:18px auto;text-align:center}
+
+/* about */
+.about{padding:40px 0;background:var(--bg);color:var(--text);text-align:center}
+
+/* footer */
+.site-footer{padding:28px 0;background:#111;color:#fff}
+.site-footer .container{display:flex;gap:20px;align-items:flex-start;justify-content:space-between}
+.site-footer h4{margin:0 0 8px}
+.site-footer ul{list-style:none;padding:0;margin:0}
+.site-footer a{color:rgba(255,255,255,0.9);opacity:0.95}
+
+/* small */
+.scroll-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:4;color:rgba(255,255,255,0.9);font-size:12px}
+@media(max-width:900px){
+  .hero__product{max-width:60vw}
+  .collections .grid{grid-template-columns:repeat(1,1fr)}
+  .campaign__media img{height:260px}
+  .site-footer .container{flex-direction:column;gap:16px}
+  .hero{min-height:72vh}
+}
